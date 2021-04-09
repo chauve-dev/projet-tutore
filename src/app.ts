@@ -8,7 +8,7 @@ var sitemap = require('express-sitemap')();
 const sassMiddleware = require('node-sass-middleware');
 const ejsLayout = require('express-ejs-layouts');
 require('dotenv').config()
-import SocketIO from "socket.io";
+import {Server, Socket} from "socket.io";
 import http, {createServer} from "http";
 import instance from "./instance";
 import {extension} from "./app/extensionController";
@@ -17,7 +17,7 @@ import * as fs from "fs";
 class app {
     private ExpressApp!: Application;
     private server!: http.Server;
-    public io!: SocketIO.Server;
+    public io!: Server;
     private sessionMiddleware!: RequestHandler;
 
 
@@ -42,12 +42,9 @@ class app {
         this.expressRegisters();
         this.generateSiteMap(); // generate the site map
         this.server = createServer(this.ExpressApp); // create the http server with express app
-        this.io = SocketIO(this.server); // declare socket.io server
+        this.io = new Server(this.server, {}); // declare socket.io server
         // register the session middleware for socket io (to get access to session in socket.io)
         let self = this;
-        this.io.use(function (socket: SocketIO.Socket, next: NextFunction) {
-            self.sessionMiddleware(socket.request, socket.request.res || {}, next);
-        });
         // register the socket IO file (maybe this will change in future to setup socket channel controllers)
         import('./socket').then((socket) => {
             socket.default(this.io)

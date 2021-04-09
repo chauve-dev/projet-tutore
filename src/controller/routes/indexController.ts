@@ -1,5 +1,5 @@
 import controller from "../../app/controller";
-import simulationExtension from "../../extensions/simulation/controller";
+import instance from "../../instance";
 
 export default class indexContoller extends controller{
     index(){
@@ -34,14 +34,7 @@ export default class indexContoller extends controller{
         this.response.render('pages/tables');
     }
 
-    simulation(){
-        simulationExtension.runSimulation(1, 1, 1, 1, 1).stdout.on('data', (data) => {
-            try {
-                data = JSON.parse(data.toString())
-                this.response.json(data)
-            }catch (e) {
-                //ignore les sortie non json
-            }
-        })
+    async simulation(){
+        this.response.render("pages/simulation");
     }
 }

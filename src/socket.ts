@@ -1,12 +1,37 @@
-export default function(io: SocketIO.Server){
+import {Server} from "socket.io";
+import instance from "./instance";
+import simulationExtension from "./extensions/simulation/controller";
+
+export default function(io: Server){
     io.sockets.on('connection', function(socket) {
 
-        //console.log('user as '+socket.id)
-        //console.log(socket.request.session)
-        
+        console.log('user as '+socket.id)
+
         socket.on('hello', () => {
             socket.emit("message", 'It works')
         })
 
-    })
+        socket.on('disconnect', () => {
+            console.log('user disconnected');
+        });
+
+        socket.on('run-simulation', (data) => {
+            var list: Array<any> = [];
+            var sim = simulationExtension.runSimulation(1, 1, 1, 1, 1)
+            sim.stdout.on('data', (data) => {
+                try {
+                    data = JSON.parse(data.toString())
+                    list.push(data)
+                }catch (e) {
+                    console.log(e);
+                }
+            });
+            sim.stdout.on("close", ()=> {
+                socket.emit("simulation-result", list)
+            })
+
+
+        });
+
+    });
 }

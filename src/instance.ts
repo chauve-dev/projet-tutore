@@ -1,7 +1,10 @@
+import {Socket} from "socket.io";
+
 export default class instance {
 
     private static _instance: instance;
     public data: any = {};
+    io: Socket | undefined;
 
     public static getInstance()
     {

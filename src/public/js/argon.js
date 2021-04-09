@@ -1002,7 +1002,6 @@ var SalesChart = (function() {
 	// Methods
 
 	function init($chart) {
-
 		var salesChart = new Chart($chart, {
 			type: 'line',
 			options: {
