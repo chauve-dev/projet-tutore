@@ -1,5 +1,6 @@
 import {extension} from "../../app/extensionController";
 import { spawn } from 'child_process';
+import path from "path";
 
 export default class simulationExtension extends extension {
 
@@ -13,7 +14,7 @@ export default class simulationExtension extends extension {
 
     static runSimulation(h: number, w: number, pm: number, pi: number, pd: number) {
         const process = spawn(
-            __dirname+"/bin/simulator",
+            path.join(__dirname, "bin", "simulator"),
             [
                 "h", h.toString(),
                 "w", w.toString(),
