@@ -7,4 +7,5 @@ export default [
     {path: "/register", controller: "indexController::register", type: "get"},
     {path: "/reset-password", controller: "indexController::resetpassword", type: "get"},
     {path: "/tables", controller: "indexController::tables", type: "get"},
+    {path: "/simulation", controller: "indexController::simulation", type: "get"}
 ]
