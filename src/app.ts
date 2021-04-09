@@ -6,6 +6,7 @@ import path from "path";
 import cookieParser from 'cookie-parser';
 var sitemap = require('express-sitemap')();
 const sassMiddleware = require('node-sass-middleware');
+const ejsLayout = require('express-ejs-layouts');
 require('dotenv').config()
 import SocketIO from "socket.io";
 import http, {createServer} from "http";
@@ -32,7 +33,7 @@ class app {
                 if (!success) return process.exit(1);
             });
         });
-        this.ExpressApp = this.expressInit('pug');
+        this.ExpressApp = this.expressInit('ejs');
         const extensions = await this.loadExtension();
         for (const extension of extensions){
             await extension.before();
@@ -66,6 +67,7 @@ class app {
         const app: Application = express();
         app.set('views', path.join(__dirname, 'views'));
         app.set('view engine', (viewEngine) ? viewEngine : "pug");
+        app.use(ejsLayout);
         app.use(express.json());
         app.use(express.urlencoded({ extended: false }));
         app.use(cookieParser());
