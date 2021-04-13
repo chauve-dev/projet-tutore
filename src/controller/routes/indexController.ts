@@ -36,11 +36,12 @@ export default class indexContoller extends controller{
 
     simulation(){
         simulationExtension.runSimulation(1, 1, 1, 1, 1).stdout.on('data', (data) => {
+            console.log(data.toString());
             try {
                 data = JSON.parse(data.toString())
                 this.response.json(data)
             }catch (e) {
-                //ignore les sortie non json
+                console.log(e);
             }
         })
     }

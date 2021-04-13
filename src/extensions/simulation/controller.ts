@@ -14,7 +14,7 @@ export default class simulationExtension extends extension {
 
     static runSimulation(h: number, w: number, pm: number, pi: number, pd: number) {
         const process = spawn(
-            path.join(__dirname, "bin", "simulator"),
+            path.join(__dirname, "bin", "simulator.exe"),
             [
                 "h", h.toString(),
                 "w", w.toString(),
