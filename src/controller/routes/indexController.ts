@@ -14,8 +14,8 @@ export default class indexContoller extends controller{
         this.response.render('pages/login');
     }
 
-    maps(){
-        this.response.render('pages/maps');
+    histories(){
+        this.response.render('pages/histories');
     }
 
     profile(){
