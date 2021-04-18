@@ -40,6 +40,9 @@
                           <div class="modal-body">
                             <form action="#" method="get">
                               <div class="row">
+                                <h3>Paramètres de base:</h3>
+                              </div>
+                              <div class="row">
                                 <div class="col-lg-6">
                                   <label for="widthSimulation">Largeur de la simulation :</label>
                                   <input class="form-control" type="number"
@@ -62,6 +65,9 @@
                               </div>
                               <hr>
                               <div class="row">
+                                <h3>Réglages des taux :</h3>
+                              </div>
+                              <div class="row">
                                 <div class="col-lg-6">
                                   <label for="infectedRate">Taux de contamination :</label>
                                   <input class="form-control" type="number"
@@ -81,21 +87,33 @@
                               </div>
                               <hr>
                               <div class="row">
+                                <h3>Mesures sanitaires :</h3>
+                              </div>
+                              <div class="row">
                                 <div class="custom-control custom-checkbox my-1 mr-sm-2">
                                   <input type="checkbox" class="custom-control-input" id="distancing">
                                   <label class="custom-control-label" for="distancing">Distanciation</label>
+                                  <i class="fas fa-people-arrows"></i>
+                                </div>
+                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                  <input type="checkbox" class="custom-control-input" id="whasingHand">
+                                  <label class="custom-control-label" for="whasingHand">Lavages des mains réguliers</label>
+                                  <i class="fas fa-hands-wash"></i>
                                 </div>
                                 <div class="custom-control custom-checkbox my-1 mr-sm-2">
                                   <input type="checkbox" class="custom-control-input" id="mask">
                                   <label class="custom-control-label" for="mask">Masque</label>
+                                  <i class="fas fa-head-side-mask"></i>
                                 </div>
                                 <div class="custom-control custom-checkbox my-1 mr-sm-2">
                                   <input type="checkbox" class="custom-control-input" id="closeSchool">
                                   <label class="custom-control-label" for="closeSchool">Écoles fermées</label>
+                                  <i class="fas fa-store-alt-slash"></i>
                                 </div>
                                 <div class="custom-control custom-checkbox my-1 mr-sm-2">
                                   <input type="checkbox" class="custom-control-input" id="confinement">
                                   <label class="custom-control-label" for="confinement">Confinement</label>
+                                  <i class="fas fa-house-user"></i>
                                 </div>
                               </div>
                           </div>
@@ -184,20 +202,31 @@
                       <td><div class="custom-control custom-checkbox my-1 mr-sm-2">
                         <input type="checkbox" class="custom-control-input" id="distancing" disabled>
                         <label class="custom-control-label" for="distancing">Distanciation</label>
+                        <i class="fas fa-people-arrows"></i>
                       </div></td>
                       <td><div class="custom-control custom-checkbox my-1 mr-sm-2">
-                        <input type="checkbox" class="custom-control-input" id="distancing" checked disabled>
-                        <label class="custom-control-label" for="distancing">Masque</label>
+                        <input type="checkbox" class="custom-control-input" id="mask" checked disabled>
+                        <label class="custom-control-label" for="mask">Masque</label>
+                        <i class="fas fa-head-side-mask"></i>
                       </div></td>
                     </tr>
                     <tr>
                       <td><div class="custom-control custom-checkbox my-1 mr-sm-2">
-                        <input type="checkbox" class="custom-control-input" id="distancing" checked disabled>
-                        <label class="custom-control-label" for="distancing">Confinement</label>
+                        <input type="checkbox" class="custom-control-input" id="confinement" checked disabled>
+                        <label class="custom-control-label" for="confinement">Confinement</label>
+                        <i class="fas fa-house-user"></i>
                       </div></td>
                       <td><div class="custom-control custom-checkbox my-1 mr-sm-2">
-                        <input type="checkbox" class="custom-control-input" id="distancing"disabled >
-                        <label class="custom-control-label" for="distancing">Écoles fermées</label>
+                        <input type="checkbox" class="custom-control-input" id="closeSchool"disabled >
+                        <label class="custom-control-label" for="closeSchool">Écoles fermées</label>
+                        <i class="fas fa-store-alt-slash"></i>
+                      </div></td>
+                    </tr>
+                    <tr>
+                      <td><div class="custom-control custom-checkbox my-1 mr-sm-2">
+                        <input type="checkbox" class="custom-control-input" id="whasingHand" disabled>
+                        <label class="custom-control-label" for="whasingHand">Lavages des mains réguliers</label>
+                        <i class="fas fa-hands-wash"></i>
                       </div></td>
                     </tr>
                 </table>
