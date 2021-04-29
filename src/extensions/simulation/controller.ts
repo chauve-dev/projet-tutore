@@ -13,8 +13,8 @@ export default class simulationExtension extends extension {
 
     }
 
-    static runSimulation(h: number, w: number, pm: number, pi: number, pd: number) {
-        const p = spawn(path.join(__dirname, "bin", "simulator"), ["h", h.toString(), "w", w.toString(), "pm", pm.toString(), "pi", pi.toString(), "pd", pd.toString()]);
+    static runSimulation() {
+        const p = spawn(path.join(__dirname, "bin", "simulator"));
         return p
     }
 }
