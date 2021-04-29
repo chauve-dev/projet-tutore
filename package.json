@@ -12,6 +12,7 @@
   "dependencies": {
     "@types/cookie": "^0.4.0",
     "@types/express-session": "^1.17.3",
+    "@types/pouchdb": "^6.4.0",
     "cookie": "^0.4.1",
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
@@ -26,6 +27,7 @@
     "objection": "^2.2.15",
     "pg": "^8.5.1",
     "pg-hstore": "^2.3.3",
+    "pouchdb": "^7.2.2",
     "pug": "^3.0.2",
     "socket.io": "^4.0.1",
     "sqlite3": "^5.0.2"
