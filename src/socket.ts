@@ -17,7 +17,11 @@ export default function(io: Server){
 
         socket.on('run-simulation', (data) => {
             var list: Array<any> = [];
-            var sim = simulationExtension.runSimulation(1, 1, 1, 1, 1)
+            var sim = simulationExtension.runSimulation();
+            data.forEach((line: any) => {
+                sim.stdin.write(JSON.stringify(line));
+            })
+            sim.stdin.write(JSON.stringify({"endMesure":1}));
             sim.stdout.on('data', (data) => {
                 try {
                     data = JSON.parse(data.toString())

@@ -142,7 +142,31 @@
     });
 
     socket.on("connect", () => {
-      socket.emit("run-simulation");
+      socket.emit("run-simulation", [
+        {
+          "width":1000,
+          "height":1000,
+          "nbEntities":500,
+          "nbSick":10,
+          "maxDays":365,
+          "probInf":0.25,
+          "probImm":0.05,
+          "probDea":0.01,
+          "infRad":1.5
+        },
+        {
+          "dateMesure":10,
+          "typeMesure":"masque"
+        },
+        {
+          "dateMesure":20,
+          "typeMesure":"distanciation"
+        },
+        {
+          "dateMesure":30,
+          "typeMesure":"confinement"
+        }
+      ]);
     })
   </script>
 </body>
