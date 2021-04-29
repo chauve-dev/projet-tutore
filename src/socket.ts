@@ -56,7 +56,6 @@ export default function(io: Server){
             sim.stdout.on('data', (data) => {
                 try {
                     data = JSON.parse(data.toString())
-                    console.log(data);
                     list.push(data)
                 }catch (e) {
                     console.log(e);
