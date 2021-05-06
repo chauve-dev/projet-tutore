@@ -1,0 +1,275 @@
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+
+
+<body>
+  <!-- Sidenav -->
+  <%- include('../partials/sidebar') %>
+    <!-- Main content -->
+    <div class="main-content">
+      <!-- Top navbar -->
+      <%- include('../partials/navbar') %>
+        <!-- Header -->
+        <%- include('../partials/header') %>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                      aria-hidden="true">
+                      <div class="modal-dialog modal-xl ">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h3 class="modal-title" id="exampleModalLabel">Paramétrage simulation </h3>
+                            <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal"
+                              aria-label="Close"><i class="fas fa-times"></i></button>
+                          </div>
+                          <div class="modal-body">
+                            <div class="card bg-gradient-default shadow">
+                              <div class="card-header bg-transparent">
+                                <div class="row align-items-center">
+                                  <div class="col">
+                                    <h6 class="text-uppercase text-light ls-1 mb-1">Simulation</h6>
+                                    <h2 class="text-white mb-0">Évolution de la simulation</h2>
+                                  </div>
+                                </div>
+                                  <div class="card-body">
+                                    <!-- Chart -->
+                                    <div class="chart">
+                                      <!-- Chart wrapper -->
+                                      <canvas id="chart-sales" class="chart-canvas"></canvas>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+          <!-- Page content -->
+          <div class="container-fluid mt--7">
+            <div class="row">
+              <div class="col">
+                <div class="card shadow border-0">
+                  <div class="row mt-2">
+                    <div class="col-xl-12 mb-5 mb-xl-0">
+                        <div class="card-header border-0">
+                          <div class="row align-items-center">
+                            <div class="col">
+                              <h3 class="mb-0">Historiques des simulations</h3>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="table-responsive">
+                          
+                          <table class="table align-items-center table-flush" id="myTable">
+                            <thead class="thead-light">
+                              <tr>
+                                <th scope="col">Simulation n°</th>
+                                <th scope="col">Population totale</th>
+                                <th scope="col">Nb de décès</th>
+                                <th scope="col">Nb immunisés</th>
+                                <th scope="col">Pourcentage de contamination</th>
+                                <th scope="col">Date de la simulation</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <th scope="row">
+                                  /argon/
+                                </th>
+                                <td>
+                                  4,569
+                                </td>
+                                <td>
+                                  340
+                                </td>
+                                <td>
+                                  <i class="fas fa-arrow-up text-success mr-3"></i> 46,53%
+                                </td>
+                                <td>
+                                  <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
+                                </td>
+                                <td>
+                                  18-04-2021
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="row">
+                                  /argon/index.html
+                                </th>
+                                <td>
+                                  3,985
+                                </td>
+                                <td>
+                                  319
+                                </td>
+                                <td>
+                                  <i class="fas fa-arrow-down text-warning mr-3"></i> 46,53%
+                                </td>
+                                <td>
+                                  <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
+                                </td>
+                                <td>
+                                  18-04-2021
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="row">
+                                  /argon/charts.html
+                                </th>
+                                <td>
+                                  3,513
+                                </td>
+                                <td>
+                                  294
+                                </td>
+                                <td>
+                                  <i class="fas fa-arrow-down text-warning mr-3"></i> 36,49%
+                                </td>
+                                <td>
+                                  <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
+                                </td>
+                                <td>
+                                  18-04-2021
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="row">
+                                  /argon/tables.html
+                                </th>
+                                <td>
+                                  2,050
+                                </td>
+                                <td>
+                                  147
+                                </td>
+                                <td>
+                                  <i class="fas fa-arrow-up text-success mr-3"></i> 50,87%
+                                </td>
+                                <td>
+                                  <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
+                                </td>
+                                <td>
+                                  18-04-2021
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="row">
+                                  /argon/profile.html
+                                </th>
+                                <td>
+                                  1,795
+                                </td>
+                                <td>
+                                  190
+                                </td>
+                                <td>
+                                  <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
+                                </td>
+                                <td>
+                                  <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
+                                </td>
+                                <td>
+                                  18-04-2021
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="row">
+                                  /argon/profile.html
+                                </th>
+                                <td>
+                                  1,795
+                                </td>
+                                <td>
+                                  190
+                                </td>
+                                <td>
+                                  <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
+                                </td>
+                                <td>
+                                  <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
+                                </td>
+                                <td>
+                                  18-04-2021
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="row">
+                                  /argon/profile.html
+                                </th>
+                                <td>
+                                  1,795
+                                </td>
+                                <td>
+                                  190
+                                </td>
+                                <td>
+                                  <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
+                                </td>
+                                <td>
+                                  <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
+                                </td>
+                                <td>
+                                  18-04-2021
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="row">
+                                  /argon/profile.html
+                                </th>
+                                <td>
+                                  1,795
+                                </td>
+                                <td>
+                                  190
+                                </td>
+                                <td>
+                                  <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
+                                </td>
+                                <td>
+                                  <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
+                                </td>
+                                <td>
+                                  18-04-2021
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="row">
+                                  /argon/profile.html
+                                </th>
+                                <td>
+                                  1,795
+                                </td>
+                                <td>
+                                  190
+                                </td>
+                                <td>
+                                  <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
+                                </td>
+                                <td>
+                                  <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
+                                </td>
+                                <td>
+                                  18-04-2021
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                    <script>
+                      const dataTable = new simpleDatatables.DataTable("#myTable")
+                    </script>
+                  </div>
+              </div>
+            </div>
+    <!-- Footer -->
+    <%- include('../partials/footer') %>
+      </div>
+      </div>
+</body>
