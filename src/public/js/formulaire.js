@@ -9,10 +9,8 @@ function ajouter_ligne()
             <label>Type de mesure :</label>
             <select class="custom-select" name="type_mesures_${numero_ligne}">
                 <option value="aucune">Selectionner une mesure</option>
-                <option value="distancing">Distanciation</i></option>
-                <option value="washingHand">Lavages des mains réguliers</option>
-                <option value="mask">Masque</option>
-                <option value="closeSchool">Écoles fermées</option>
+                <option value="distanciation">Distanciation</i></option>
+                <option value="masque">Masque</option>
                 <option value="confinement">Confinement</option>
             </select>  
         </div>
@@ -32,3 +30,114 @@ function supprimer(id)
 {
     document.getElementById(id).remove();
 }
+
+function form_submit() {
+    var form = document.getElementById('form_sim');
+    var obj = {};
+    var objFinal = [];
+    var formData = new FormData(form);
+
+    for (var key of formData.keys()) {
+        if (key.startsWith("type_mesures_")) {
+            var id = key.replace("type_mesures_", "");
+            objFinal.push({
+                typeMesure: formData.get("type_mesures_"+id),
+                dateMesure: formData.get("date_debut_"+id)
+            })
+        }else if(!key.startsWith("date_debut_")){
+            obj[key] = formData.get(key);
+        }
+    }
+    objFinal.unshift(obj)
+    socket.emit("run-simulation", objFinal);
+    return false;
+}
+
+function formatData(data){
+    var toReturn = {
+        dead: [],
+        healthy: [],
+        imune: [],
+        sick: [],
+        label: []
+    }
+    data.forEach((data, index) => {
+        toReturn.dead.push(data.d)
+        toReturn.healthy.push(data.h)
+        toReturn.imune.push(data.i)
+        toReturn.sick.push(data.s)
+        toReturn.label.push(index)
+    });
+    return toReturn;
+}
+
+function generateChart(chart, label, dead, healthy, imune, sick){
+    document.getElementById("numberOfDead").innerHTML = dead[dead.length-1];
+    document.getElementById("numberOfInfected").innerHTML = Math.max.apply(null, sick);
+    document.getElementById("transmissionRate").innerHTML = Math.max.apply(null, imune);
+    document.getElementById("numberOfPopulation").innerHTML = healthy[healthy.length-1];
+    try {
+        window.chart.destroy()
+    } catch(e) {}
+    window.chart = new Chart(chart, {
+        type: 'line',
+        options: {
+            elements: {
+                point:{
+                    radius: 0
+                }
+            },
+            borderWidth: 5,
+            tension: 0.3,
+            tooltips: {
+                callbacks: {
+                    label: function(item, data) {
+                        var label = data.datasets[item.datasetIndex].label || '';
+                        var yLabel = item.yLabel;
+                        var content = '';
+                        if (data.datasets.length > 1) {
+                            content += label;
+                        }
+                        content += yLabel;
+                        return content;
+                    }
+                }
+            }
+        },
+        data: {
+            labels: label,
+            datasets: [
+                {
+                    label: 'Mort',
+                    data: dead,
+                    borderColor: "red",
+                    backgroundColor: "red"
+                },
+                {
+                    label: 'En bonne santé',
+                    data: healthy,
+                    borderColor: "green",
+                    backgroundColor: "green"
+                },
+                {
+                    label: 'Immunisé',
+                    data: imune,
+                    borderColor: "blue",
+                    backgroundColor: "blue"
+                },
+                {
+                    label: 'Malade',
+                    data: sick,
+                    borderColor: "yellow",
+                    backgroundColor: "yellow"
+                }
+            ],
+        }
+    });
+}
+const socket = io();
+
+socket.on("simulation-result", (data) => {
+    var data = formatData(data);
+    generateChart(document.getElementById("chart-simulation"), data.label, data.dead, data.healthy, data.imune, data.sick)
+});

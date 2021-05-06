@@ -47,6 +47,14 @@ export default function(io: Server){
 
 
         socket.on('run-simulation', (data) => {
+            for(var i = 0; i < data.length; i++){
+                var obj = data[i];
+                for(var prop in obj){
+                    if(obj.hasOwnProperty(prop) && obj[prop] !== null && !isNaN(obj[prop])){
+                        obj[prop] = +obj[prop];
+                    }
+                }
+            }
             const list: Array<any> = [];
             const sim = simulationExtension.runSimulation();
             data.forEach((line: any) => {

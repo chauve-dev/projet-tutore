@@ -38,29 +38,29 @@
                               aria-label="Close"><i class="fas fa-times"></i></button>
                           </div>
                           <div class="modal-body p-5">
-                            <form action="#" method="get" id="form_id">
+                            <form action="#" method="get" id="form_sim" onsubmit="return form_submit();">
                               <div class="row">
                                 <h3>Paramètres de base:</h3>
                               </div>
                               <div class="row">
                                 <div class="col-lg-6">
-                                  <label for="widthSimulation">Largeur de la simulation :</label>
+                                  <label for="width">Largeur de la simulation :</label>
                                   <input class="form-control" type="number"
-                                    name="widthSimulation" placeholder="Largeur de la simulation" />
-                                    <label for="totalPopulation">Population totale</label>
-                                    <input class="form-control" type="number" 
-                                    name="totalPopulation" placeholder="Population totale" />
+                                    name="width" placeholder="Largeur de la simulation" />
+                                    <label for="nbEntities">Population totale</label>
+                                    <input class="form-control" type="number"
+                                    name="nbEntities" placeholder="Population totale" />
                                   </div>
                                   <div class="col-lg-6">
-                                    <label for="heightSimulation">Hauteur de la simulation :</label>
+                                    <label for="height">Hauteur de la simulation :</label>
                                     <input class="form-control" type="number"
-                                      name="heightSimulation" placeholder="Hauteur de la simulation" />
-                                      <label for="infectedPopulation">Population infectée</label>
+                                      name="height" placeholder="Hauteur de la simulation" />
+                                      <label for="nbSick">Population infectée</label>
                                     <input class="form-control" type="number"
-                                      name="infectedPopulation" placeholder="Population infectée" />
-                                      <label for="timeSimulation">Durée de la simulation</label>
+                                      name="nbSick" placeholder="Population infectée" />
+                                      <label for="maxDays">Durée de la simulation</label>
                                     <input class="form-control" type="number"
-                                      name="timeSimulation" placeholder="Durée de la simulation (en jour)" />
+                                      name="maxDays" placeholder="Durée de la simulation (en jour)" />
                                     </div>
                               </div>
                               <hr>
@@ -69,20 +69,20 @@
                               </div>
                               <div class="row">
                                 <div class="col-lg-6">
-                                  <label for="infectedRate">Taux de contamination :</label>
-                                  <input class="form-control" type="number"
-                                    name="infectedRate" placeholder="Taux de contamination" />
-                                    <label for="deadRate">Taux de mortalité</label>
-                                    <input class="form-control" type="number" 
-                                    name="deadRate" placeholder="Taux de mortalité" />
+                                  <label for="probInf">Taux de contamination :</label>
+                                  <input class="form-control" type="number" step="0.01"
+                                    name="probInf" placeholder="Taux de contamination" />
+                                    <label for="probDea">Taux de mortalité</label>
+                                    <input class="form-control" type="number"  step="0.01"
+                                    name="probDea" placeholder="Taux de mortalité" />
                                   </div>
                                   <div class="col-lg-6">
-                                    <label for="immunizationRate">Taux immunisé :</label>
-                                    <input class="form-control" type="number"
-                                      name="immunizationRate" placeholder="Taux immunisé" />
-                                    <label for="contaminationDistance">Distance de contamination :</label>
-                                  <input class="form-control" type="number"
-                                    name="contaminationDistance" placeholder="Distance de contamination" />
+                                    <label for="probImm">Taux immunisé :</label>
+                                    <input class="form-control" type="number" step="0.01"
+                                      name="probImm" placeholder="Taux immunisé" />
+                                    <label for="infRad">Distance de contamination :</label>
+                                  <input class="form-control" type="number" step="0.01"
+                                    name="infRad" placeholder="Distance de contamination" />
                                 </div>
                               </div>
                               <hr>
@@ -110,7 +110,7 @@
                   <!-- Chart -->
                   <div class="chart">
                     <!-- Chart wrapper -->
-                    <canvas id="chart-sales" class="chart-canvas"></canvas>
+                    <canvas id="chart-simulation" class="chart-canvas"></canvas>
                   </div>
                 </div>
               </div>
