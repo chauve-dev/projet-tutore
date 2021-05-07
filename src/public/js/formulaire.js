@@ -36,6 +36,7 @@ function form_submit() {
     var obj = {};
     var objFinal = [];
     var formData = new FormData(form);
+    document.getElementById('dismissModal').click();
 
     for (var key of formData.keys()) {
         if (key.startsWith("type_mesures_")) {
@@ -49,6 +50,15 @@ function form_submit() {
         }
     }
     objFinal.unshift(obj)
+    console.log(objFinal)
+
+    document.getElementById("widthSimulation").innerHTML = obj.width
+    document.getElementById("heightSimulation").innerHTML = obj.height
+    document.getElementById("basicPopulation").innerHTML = obj.nbEntities
+    document.getElementById("infectedPopulation").innerHTML = obj.nbSick
+    document.getElementById("contaminationRate").innerHTML = (Number.parseFloat(obj.probInf)*100)+"%"
+    document.getElementById("mortalityRate").innerHTML = (Number.parseFloat(obj.probDea)*100)+"%"
+
     socket.emit("run-simulation", objFinal);
     return false;
 }
@@ -72,12 +82,12 @@ function formatData(data){
 }
 
 function generateChart(chart, label, dead, healthy, imune, sick){
-    document.getElementById("numberOfDead").innerHTML = dead[dead.length-1];
-    document.getElementById("numberOfInfected").innerHTML = Math.max.apply(null, sick);
-    document.getElementById("transmissionRate").innerHTML = Math.max.apply(null, imune);
-    document.getElementById("numberOfPopulation").innerHTML = healthy[healthy.length-1];
     try {
         window.chart.destroy()
+        document.getElementById("numberOfDead").innerHTML = dead[dead.length-1];
+        document.getElementById("numberOfInfected").innerHTML = Math.max.apply(null, sick);
+        document.getElementById("numberOfImmune").innerHTML = imune[imune.length-1];
+        document.getElementById("numberOfPopulation").innerHTML = healthy[healthy.length-1];
     } catch(e) {}
     window.chart = new Chart(chart, {
         type: 'line',

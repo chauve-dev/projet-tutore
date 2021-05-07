@@ -76,6 +76,8 @@ export default function(io: Server){
                 db.post({
                     date: Date.now().toString(),
                     sim: list
+                }).then(data => {
+                    console.log(data.id)
                 });
                 socket.emit("simulation-result", list)
             })
