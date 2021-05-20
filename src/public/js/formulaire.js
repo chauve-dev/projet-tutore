@@ -14,10 +14,17 @@ function ajouter_ligne()
                 <option value="confinement">Confinement</option>
             </select>  
         </div>
-        <div class="col-6">
-            <label for="date_debut">Dans combien de jour : </label>
-            <div class="d-flex">
+        <div class="d-flex col-6">
+            <div class="col-5">
+                <label for="date_debut">Dans combien de jour : </label>
                 <input class="form-control mr-1" type="number" name="date_debut_${numero_ligne}" id="date_debut" min="0">
+            </div>
+            <div class="col-5">
+                <label for="date_debut">Date de fin : </label>
+                <input class="form-control mr-1" type="number" name="date_fin_${numero_ligne}" id="date_fin" min="0">
+            </div>
+            <div class="col-2">
+                <label for="date_debut">ㅤㅤ</label>
                 <button type="button" class="btn btn-danger" onclick="supprimer('ligne_mesure_${numero_ligne}')"><i class="fas fa-minus"></i></button>  
             </div>
         </div>

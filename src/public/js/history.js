@@ -4,16 +4,16 @@ function createRow(row){
           ${row.id}
         </th>
         <td>
-          4,569
+          0
         </td>
         <td>
-          340
+          0
         </td>
         <td>
-          <i class="fas fa-arrow-up text-success mr-3"></i> 46,53%
+          <i class="fas fa-arrow-up text-success mr-3"></i> 0%
         </td>
         <td>
-          <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
+          <i class="fas fa-arrow-down text-danger mr-3"></i> 0%
         </td>
         <td>
           ${getDate(new Date(Number.parseInt(row.date)))}
