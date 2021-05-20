@@ -39,6 +39,7 @@ class app {
             await extension.before();
         }
         this.sessionMiddleware = this.expressSession();
+        this.ExpressApp.use(this.sessionMiddleware);
         this.expressRegisters();
         this.generateSiteMap(); // generate the site map
         this.server = createServer(this.ExpressApp); // create the http server with express app

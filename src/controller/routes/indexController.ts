@@ -10,31 +10,8 @@ export default class indexContoller extends controller{
         this.response.render('pages/icons');
     }
 
-    login(){
-        this.response.render('pages/login');
-    }
-
     histories(){
         this.response.render('pages/histories');
     }
 
-    profile(){
-        this.response.render('pages/profile');
-    }
-
-    register(){
-        this.response.render('pages/register');
-    }
-
-    resetpassword(){
-        this.response.render('pages/reset-password');
-    }
-
-    tables(){
-        this.response.render('pages/tables');
-    }
-
-    async simulation(){
-        this.response.render("pages/simulation");
-    }
 }

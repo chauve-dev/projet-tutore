@@ -50,7 +50,6 @@ function form_submit() {
         }
     }
     objFinal.unshift(obj)
-    console.log(objFinal)
 
     document.getElementById("widthSimulation").innerHTML = obj.width
     document.getElementById("heightSimulation").innerHTML = obj.height

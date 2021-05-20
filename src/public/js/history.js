@@ -29,14 +29,16 @@ function getDate(d) {
 
 socket.on("simulationList", data => {
     table = document.getElementById("tableBody");
-    data.reverse().forEach(element => {
-        table.innerHTML += createRow(element)
-    })
-    new simpleDatatables.DataTable("#myTable", {
-    columns: [
-        {select: 5, sort: "desc"}
-    ]
-    })
+    if(table != null) {
+        data.reverse().forEach(element => {
+            table.innerHTML += createRow(element)
+        })
+        new simpleDatatables.DataTable("#myTable", {
+            columns: [
+                {select: 5, sort: "desc"}
+            ]
+        })
+    }
 })
 
 socket.emit("getSimulations")
