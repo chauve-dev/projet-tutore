@@ -1,7 +1,6 @@
 import {Server} from "socket.io";
 import PouchDB from 'pouchdb';
 import simulationExtension from "./extensions/simulation/controller";
-import {val} from "objection";
 
 export default function(io: Server){
     io.sockets.on('connection', function(socket) {
@@ -43,7 +42,25 @@ export default function(io: Server){
             }).catch(function (err) {
                 console.log(err);
             });
-        })
+        });
+
+        socket.on('getLastSimulation', () => {
+            const db = new PouchDB('simulations');
+            db.allDocs({
+                include_docs: true,
+                attachments: true,
+            }).then(function (result) {
+                // @ts-ignore
+                const sResult = result.rows.slice().sort((a, b) => b.doc.date - a.doc.date)
+                db.get(sResult[1].id).then((obj) => {
+                    socket.emit('lastSimulation', obj)
+                }).catch(() => {
+                    socket.emit("error", "Aucune simulation ne possède cet identifiant")
+                });
+            }).catch(function (err) {
+                console.log(err);
+            });
+        });
 
 
         socket.on('run-simulation', (data) => {

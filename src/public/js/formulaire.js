@@ -50,7 +50,8 @@ function form_submit() {
             var id = key.replace("type_mesures_", "");
             objFinal.push({
                 typeMesure: formData.get("type_mesures_"+id),
-                dateMesure: formData.get("date_debut_"+id)
+                dateMesure: formData.get("date_debut_"+id),
+                dateFinMesure: formData.get("date_fin_"+id)
             })
         }else if(!key.startsWith("date_debut_")){
             obj[key] = formData.get(key);
@@ -77,6 +78,7 @@ function formatData(data){
         sick: [],
         label: []
     }
+    console.log(data)
     data.forEach((data, index) => {
         toReturn.dead.push(data.d)
         toReturn.healthy.push(data.h)
@@ -84,17 +86,20 @@ function formatData(data){
         toReturn.sick.push(data.s)
         toReturn.label.push(index)
     });
+    console.log(toReturn)
     return toReturn;
 }
 
 function generateChart(chart, label, dead, healthy, imune, sick){
     try {
         window.chart.destroy()
-        document.getElementById("numberOfDead").innerHTML = dead[dead.length-1];
-        document.getElementById("numberOfInfected").innerHTML = Math.max.apply(null, sick);
-        document.getElementById("numberOfImmune").innerHTML = imune[imune.length-1];
-        document.getElementById("numberOfPopulation").innerHTML = healthy[healthy.length-1];
     } catch(e) {}
+    window.simData = {
+        dead: dead,
+        healthy: healthy,
+        imune: imune,
+        sick: sick
+    }
     window.chart = new Chart(chart, {
         type: 'line',
         options: {
@@ -155,5 +160,72 @@ const socket = io();
 
 socket.on("simulation-result", (data) => {
     var data = formatData(data);
+    socket.emit("getLastSimulation");
     generateChart(document.getElementById("chart-simulation"), data.label, data.dead, data.healthy, data.imune, data.sick)
 });
+
+socket.on("lastSimulation", (data) => {
+    var data = formatData(data.sim);
+    genHeader(window.simData, data);
+});
+
+function genHeader(data, lastData){
+
+    const statDead = document.getElementById("statsNumberOfDead");
+    const statSick = document.getElementById("statsNumberOfInfected");
+    const statImune = document.getElementById("statsNumberOfImune");
+    const statPop = document.getElementById("statsNumberOfPopulation");
+
+    var currentDead = data.dead[data.dead.length-1];
+    var currentSick = Math.max.apply(null, data.sick);
+    var currentImune = data.imune[data.imune.length-1];
+    var currentHealthy = data.healthy[data.healthy.length-1];
+
+    var lastDead = lastData.dead[lastData.dead.length-1];
+    var lastSick = Math.max.apply(null, lastData.sick);
+    var lastImune = lastData.imune[lastData.imune.length-1];
+    var lastHealthy = lastData.healthy[lastData.healthy.length-1];
+
+    if(currentDead === 0) currentDead = 1;
+    if(currentSick === 0) currentSick = 1;
+    if(currentImune === 0) currentImune = 1;
+    if(currentHealthy === 0) currentHealthy = 1;
+
+    if(lastDead === 0) lastDead = 1;
+    if(lastSick === 0) lastSick = 1;
+    if(lastImune === 0) lastImune = 1;
+    if(lastHealthy === 0) lastHealthy = 1;
+
+    const deathP = Math.round(((currentDead/lastDead)-1)*100);
+    const sickP = Math.round(((currentSick/lastSick)-1)*100);
+    const imuneP = Math.round(((currentImune/lastImune)-1)*100);
+    const healthyP = Math.round(((currentHealthy/lastHealthy)-1)*100);
+
+    addStats(statDead, deathP);
+    addStats(statSick, sickP);
+    addStats(statImune, imuneP);
+    addStats(statPop, healthyP);
+
+    document.getElementById("numberOfDead").innerHTML = currentDead;
+    document.getElementById("numberOfInfected").innerHTML = currentSick;
+    document.getElementById("numberOfImmune").innerHTML = currentImune;
+    document.getElementById("numberOfPopulation").innerHTML = currentHealthy;
+
+
+}
+
+function addStats(element, data) {
+    const arrowUp = "<i class=\"fas fa-arrow-up\"></i>";
+    const arrowDown = "<i class=\"fas fa-arrow-down\"></i>";
+    const upClass = "text-success"
+    const downClass = "text-danger"
+    if (Math.sign(data)==-1){
+        element.innerHTML = arrowDown + Math.abs(data) + "%";
+        element.classList.remove(upClass);
+        element.classList.add(downClass);
+    } else {
+        element.innerHTML = arrowUp + data + "%";
+        element.classList.remove(downClass);
+        element.classList.add(upClass);
+    }
+}
