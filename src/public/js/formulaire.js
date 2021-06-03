@@ -63,8 +63,8 @@ function form_submit() {
     document.getElementById("heightSimulation").innerHTML = obj.height
     document.getElementById("basicPopulation").innerHTML = obj.nbEntities
     document.getElementById("infectedPopulation").innerHTML = obj.nbSick
-    document.getElementById("contaminationRate").innerHTML = (Number.parseFloat(obj.probInf)*100)+"%"
-    document.getElementById("mortalityRate").innerHTML = (Number.parseFloat(obj.probDea)*100)+"%"
+    document.getElementById("contaminationRate").innerHTML = (Number.parseFloat(obj.probInf))+"%"
+    document.getElementById("mortalityRate").innerHTML = (Number.parseFloat(obj.probDea))+"%"
 
     socket.emit("run-simulation", objFinal);
     return false;
@@ -103,6 +103,11 @@ function generateChart(chart, label, dead, healthy, imune, sick){
     window.chart = new Chart(chart, {
         type: 'line',
         options: {
+            responsive: true,
+            interaction: {
+                mode: 'index',
+                intersect: false,
+            },
             elements: {
                 point:{
                     radius: 0
@@ -123,6 +128,25 @@ function generateChart(chart, label, dead, healthy, imune, sick){
                         return content;
                     }
                 }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: "white"
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    ticks: {
+                        color: "white"
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: "white"
+                    }
+                }
             }
         },
         data: {
@@ -137,14 +161,14 @@ function generateChart(chart, label, dead, healthy, imune, sick){
                 {
                     label: 'En bonne santé',
                     data: healthy,
-                    borderColor: "green",
-                    backgroundColor: "green"
+                    borderColor: "lime",
+                    backgroundColor: "lime"
                 },
                 {
                     label: 'Immunisé',
                     data: imune,
-                    borderColor: "blue",
-                    backgroundColor: "blue"
+                    borderColor: "aqua",
+                    backgroundColor: "aqua"
                 },
                 {
                     label: 'Malade',
@@ -186,6 +210,11 @@ function genHeader(data, lastData){
     var lastImune = lastData.imune[lastData.imune.length-1];
     var lastHealthy = lastData.healthy[lastData.healthy.length-1];
 
+    document.getElementById("numberOfDead").innerHTML = currentDead;
+    document.getElementById("numberOfInfected").innerHTML = currentSick;
+    document.getElementById("numberOfImmune").innerHTML = currentImune;
+    document.getElementById("numberOfPopulation").innerHTML = currentHealthy;
+
     if(currentDead === 0) currentDead = 1;
     if(currentSick === 0) currentSick = 1;
     if(currentImune === 0) currentImune = 1;
@@ -205,13 +234,6 @@ function genHeader(data, lastData){
     addStats(statSick, sickP);
     addStats(statImune, imuneP);
     addStats(statPop, healthyP);
-
-    document.getElementById("numberOfDead").innerHTML = currentDead;
-    document.getElementById("numberOfInfected").innerHTML = currentSick;
-    document.getElementById("numberOfImmune").innerHTML = currentImune;
-    document.getElementById("numberOfPopulation").innerHTML = currentHealthy;
-
-
 }
 
 function addStats(element, data) {

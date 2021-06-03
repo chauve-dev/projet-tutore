@@ -7,8 +7,8 @@ export default function(io: Server){
 
         console.log('user as '+socket.id)
 
-        socket.on('hello', () => {
-            socket.emit("message", 'It works')
+        socket.on('destroy', () => {
+            new PouchDB('simulations').destroy()
         })
 
         socket.on('disconnect', () => {
@@ -35,7 +35,9 @@ export default function(io: Server){
                     toSend.push({
                         // @ts-ignore
                         date: value.doc.date,
-                        id: value.id
+                        id: value.id,
+                        // @ts-ignore
+                        name: value.doc.name
                     })
                 })
                 socket.emit('simulationList', toSend)
@@ -74,7 +76,9 @@ export default function(io: Server){
             }
             const list: Array<any> = [];
             const sim = simulationExtension.runSimulation();
+            var name = "";
             data.forEach((line: any) => {
+                if("name" in line) name = line.name;
                 sim.stdin.write(JSON.stringify(line));
             })
             sim.stdin.write(JSON.stringify({"endMesure":1}));
@@ -91,6 +95,7 @@ export default function(io: Server){
             sim.stdout.on("close", ()=> {
                 const db = new PouchDB('simulations');
                 db.post({
+                    name: name,
                     date: Date.now().toString(),
                     sim: list
                 }).then(data => {

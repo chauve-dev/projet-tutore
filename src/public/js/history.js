@@ -1,7 +1,8 @@
 function createRow(row){
+    if ("name" in row) console.log()
     return `<tr data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="socket.emit('getSimulationById', '${row.id}')">
         <th scope="row">
-          ${row.id}
+          ${row.name}
         </th>
         <td>
           0
