@@ -42,7 +42,7 @@ function testMesure(numero_ligne)
     {
         document.getElementById('ligneMesure').innerHTML = `
             <div class="col-sm" id="taux_dissidence_div${numero_ligne}">
-                <label for="tauxDissidence">Taux de nom respect : </label>
+                <label for="tauxDissidence">Taux de non respect : </label>
                 <input class="form-control mr-1" type="number" name="taux_dissidence_${numero_ligne}" id="tauxDissidence" min="0">
             </div>
         ` + document.getElementById('ligneMesure').innerHTML;
@@ -72,17 +72,21 @@ function form_submit() {
     for (var key of formData.keys()) {
         if (key.startsWith("type_mesures_")) {
             var id = key.replace("type_mesures_", "");
-            objFinal.push({
+            var temp = {
                 typeMesure: formData.get("type_mesures_"+id),
                 dateMesure: formData.get("date_debut_"+id),
-                dateFinMesure: formData.get("date_fin_"+id)
-            })
+                dateFinMesure: formData.get("date_fin_"+id),
+            }
+            if(formData.get("type_mesures_"+id) === "confinement"){
+                temp.pourDiss = formData.get("taux_dissidence_"+id);
+            }
+            objFinal.push(temp)
         }else if(!key.startsWith("date_debut_")){
             obj[key] = formData.get(key);
         }
     }
-    objFinal.unshift(obj)
 
+    objFinal.unshift(obj)
     document.getElementById("widthSimulation").innerHTML = obj.width
     document.getElementById("heightSimulation").innerHTML = obj.height
     document.getElementById("basicPopulation").innerHTML = obj.nbEntities
@@ -102,7 +106,6 @@ function formatData(data){
         sick: [],
         label: []
     }
-    console.log(data)
     data.forEach((data, index) => {
         toReturn.dead.push(data.d)
         toReturn.healthy.push(data.h)
@@ -110,7 +113,6 @@ function formatData(data){
         toReturn.sick.push(data.s)
         toReturn.label.push(index)
     });
-    console.log(toReturn)
     return toReturn;
 }
 
