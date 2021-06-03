@@ -5,32 +5,56 @@ function ajouter_ligne()
     liste_mesure = document.getElementById('liste_mesure');
     liste_mesure.insertAdjacentHTML('beforeend',`
     <div class="row" id="ligne_mesure_${numero_ligne}">
-        <div class="col-6">
+        <div class="col-3">
             <label>Type de mesure :</label>
-            <select class="custom-select" name="type_mesures_${numero_ligne}">
+            <select class="custom-select" id="type_mesures_${numero_ligne}" name="type_mesures_${numero_ligne}" onchange="testMesure(${numero_ligne})">
                 <option value="aucune">Selectionner une mesure</option>
                 <option value="distanciation">Distanciation</i></option>
                 <option value="masque">Masque</option>
                 <option value="confinement">Confinement</option>
             </select>  
         </div>
-        <div class="d-flex col-6">
-            <div class="col-5">
-                <label for="date_debut">Dans combien de jour : </label>
-                <input class="form-control mr-1" type="number" name="date_debut_${numero_ligne}" id="date_debut" min="0">
-            </div>
-            <div class="col-5">
-                <label for="date_debut">Date de fin : </label>
-                <input class="form-control mr-1" type="number" name="date_fin_${numero_ligne}" id="date_fin" min="0">
-            </div>
-            <div class="col-2">
-                <label for="date_debut">ㅤㅤ</label>
-                <button type="button" class="btn btn-danger" onclick="supprimer('ligne_mesure_${numero_ligne}')"><i class="fas fa-minus"></i></button>  
+        <div class="col-9">
+            <div class="row" id="ligneMesure">
+                <div class="col-sm">
+                    <label for="date_debut">Dans combien de jour : </label>
+                    <input class="form-control mr-1" type="number" name="date_debut_${numero_ligne}" id="date_debut" min="0">
+                </div>
+                <div class="col-sm">
+                    <label for="date_debut">Date de fin : </label>
+                    <input class="form-control mr-1" type="number" name="date_fin_${numero_ligne}" id="date_fin" min="0">
+                </div>
+                <div class="col-2">
+                    <label for="date_debut">Supprimer :</label>
+                    <button type="button" class="btn btn-danger" onclick="supprimer('ligne_mesure_${numero_ligne}')"><i class="fas fa-minus"></i></button>  
+                </div>
             </div>
         </div>
   </div>
   `);
   numero_ligne++;
+}
+
+function testMesure(numero_ligne)
+{   
+    mesure = document.getElementById(`type_mesures_${numero_ligne}`).value;
+    if(mesure == 'confinement')
+    {
+        document.getElementById('ligneMesure').innerHTML = `
+            <div class="col-sm" id="taux_dissidence_div${numero_ligne}">
+                <label for="tauxDissidence">Taux de nom respect : </label>
+                <input class="form-control mr-1" type="number" name="taux_dissidence_${numero_ligne}" id="tauxDissidence" min="0">
+            </div>
+        ` + document.getElementById('ligneMesure').innerHTML;
+    }
+    else
+    {
+        div = document.getElementById(`taux_dissidence_div${numero_ligne}`);
+        if(div)
+        {
+            div.remove();
+        }
+    }
 }
 
 function supprimer(id)
