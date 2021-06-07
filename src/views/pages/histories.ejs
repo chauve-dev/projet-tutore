@@ -14,41 +14,100 @@
         <!-- Header -->
         <%- include('../partials/header') %>
 
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                      aria-hidden="true">
-                      <div class="modal-dialog modal-xl ">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h3 class="modal-title" id="exampleModalLabel">Paramétrage simulation </h3>
-                            <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal"
-                              aria-label="Close"><i class="fas fa-times"></i></button>
-                          </div>
-                          <div class="modal-body">
-                            <div class="card bg-gradient-default shadow">
-                              <div class="card-header bg-transparent">
-                                <div class="row align-items-center">
-                                  <div class="col">
-                                    <h6 class="text-uppercase text-light ls-1 mb-1">Simulation</h6>
-                                    <h2 class="text-white mb-0">Évolution de la simulation</h2>
-                                  </div>
-                                </div>
-                                  <div class="card-body">
-                                    <!-- Chart -->
-                                    <div class="chart">
-                                      <!-- Chart wrapper -->
-                                      <canvas id="chart-simulation" class="chart-canvas" style="max-height: 100%;"></canvas>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                          </div>
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xl ">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h3 class="modal-title" id="exampleModalLabel">Paramétrage simulation </h3>
+                  <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal" aria-label="Close"><i
+                      class="fas fa-times"></i></button>
+                </div>
+                <div class="modal-body">
+                  <div class="card bg-gradient-default shadow">
+                    <div class="card-header bg-transparent">
+                      <div class="row align-items-center">
+                        <div class="col">
+                          <h6 class="text-uppercase text-light ls-1 mb-1">Simulation</h6>
+                          <h2 class="text-white mb-0">Évolution de la simulation</h2>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <!-- Chart -->
+                        <div class="chart">
+                          <!-- Chart wrapper -->
+                          <canvas id="chart-simulation" class="chart-canvas" style="max-height: 100%;"></canvas>
                         </div>
                       </div>
                     </div>
+                  </div>
+                  <div class="row mt-2">
+                    <h3>Paramètres de base:</h3>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <label for="width">Nom de la simulation :</label>
+                      <input class="form-control" type="text"
+                             name="name" disabled/>
+                    </div>
+                    <div class="col-lg-6">
+                      <label for="width">Largeur de la simulation :</label>
+                      <input class="form-control" type="number"
+                        name="width" disabled />
+                        <label for="height">Hauteur de la simulation :</label>
+                        <input class="form-control" type="number"
+                          name="height" disabled />
+                      <label for="infTime">Durée de vie du virus :</label>
+                      <input class="form-control" type="number"
+                      name="infTime" disabled/>
+                    </div>
+                      <div class="col-lg-6">
+                        <label for="nbEntities">Population totale :</label>
+                        <input class="form-control" type="number"
+                        name="nbEntities" disabled />
+                          <label for="nbSick">Population infectée :</label>
+                        <input class="form-control" type="number"
+                          name="nbSick" disabled />
+                          <label for="maxDays">Durée de la simulation :</label>
+                        <input class="form-control" type="number"
+                          name="maxDays" disabled />
+                        </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <h3>Réglages des taux :</h3>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <label for="probInf">Taux de contamination :</label>
+                      <input class="form-control" type="number" step="0.01"
+                        name="probInf" disabled />
+                        <label for="probDea">Taux de mortalité :</label>
+                        <input class="form-control" type="number"  step="0.01"
+                        name="probDea" disabled />
+                      </div>
+                      <div class="col-lg-6">
+                        <label for="probImm">Taux immunisé :</label>
+                        <input class="form-control" type="number" step="0.01"
+                          name="probImm" disabled />
+                        <label for="infRad">Distance de contamination :</label>
+                      <input class="form-control" type="number" step="0.01"
+                        name="infRad" disabled />
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <h3>Mesures sanitaires :</h3>
+                  </div>
+                  <div id="liste_mesure">
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                </div>
+              </div>
+            </div>
+          </div>
           <!-- Page content -->
           <div class="container-fluid mt--7">
             <div class="row">
@@ -56,40 +115,40 @@
                 <div class="card shadow border-0">
                   <div class="row mt-2">
                     <div class="col-xl-12 mb-5 mb-xl-0">
-                        <div class="card-header border-0">
-                          <div class="row align-items-center">
-                            <div class="col">
-                              <h3 class="mb-0">Historiques des simulations</h3>
-                            </div>
+                      <div class="card-header border-0">
+                        <div class="row align-items-center">
+                          <div class="col">
+                            <h3 class="mb-0">Historiques des simulations</h3>
                           </div>
                         </div>
-                        <div class="table-responsive">
-                          
-                          <table class="table align-items-center table-flush" id="myTable">
-                            <thead class="thead-light">
-                              <tr>
-                                <th scope="col">Simulation n°</th>
-                                <th scope="col">Population totale</th>
-                                <th scope="col">Nb de décès</th>
-                                <th scope="col">Nb immunisés</th>
-                                <th scope="col">Pourcentage de contamination</th>
-                                <th scope="col">Date de la simulation</th>
-                              </tr>
-                            </thead>
-                            <tbody id="tableBody">
+                      </div>
+                      <div class="table-responsive">
+
+                        <table class="table align-items-center table-flush" id="myTable">
+                          <thead class="thead-light">
+                            <tr>
+                              <th scope="col">Simulation n°</th>
+                              <th scope="col">Population totale</th>
+                              <th scope="col">Nb de décès</th>
+                              <th scope="col">Nb immunisés</th>
+                              <th scope="col">Pourcentage de contamination</th>
+                              <th scope="col">Date de la simulation</th>
+                            </tr>
+                          </thead>
+                          <tbody id="tableBody">
 
 
-                            </tbody>
-                          </table>
-                        </div>
+                          </tbody>
+                        </table>
                       </div>
                     </div>
                   </div>
+                </div>
               </div>
             </div>
-    <!-- Footer -->
-    <%- include('../partials/footer') %>
-      </div>
-      </div>
-  <%- include('../partials/scripts') %>
+            <!-- Footer -->
+            <%- include('../partials/footer') %>
+          </div>
+    </div>
+    <%- include('../partials/scripts') %>
 </body>
