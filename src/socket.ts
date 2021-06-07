@@ -91,13 +91,15 @@ export default function(io: Server){
                 }
             });
 
+            console.log(data)
 
             sim.stdout.on("close", ()=> {
                 const db = new PouchDB('simulations');
                 db.post({
                     name: name,
                     date: Date.now().toString(),
-                    sim: list
+                    sim: list,
+                    data: data
                 }).then(data => {
                     console.log(data.id)
                 });
