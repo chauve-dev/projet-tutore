@@ -15,7 +15,7 @@ function ajouter_ligne()
             </select>  
         </div>
         <div class="col-9">
-            <div class="row" id="ligneMesure">
+            <div class="row" id="parametre_ligne_mesure_${numero_ligne}">
                 <div class="col-sm">
                     <label for="date_debut">Dans combien de jour : </label>
                     <input class="form-control mr-1" type="number" name="date_debut_${numero_ligne}" id="date_debut" min="0">
@@ -40,12 +40,12 @@ function testMesure(numero_ligne)
     mesure = document.getElementById(`type_mesures_${numero_ligne}`).value;
     if(mesure == 'confinement')
     {
-        document.getElementById('ligneMesure').innerHTML = `
+        document.getElementById(`parametre_ligne_mesure_${numero_ligne}`).innerHTML = `
             <div class="col-sm" id="taux_dissidence_div${numero_ligne}">
                 <label for="tauxDissidence">Taux de non respect : </label>
                 <input class="form-control mr-1" type="number" name="taux_dissidence_${numero_ligne}" id="tauxDissidence" min="0">
             </div>
-        ` + document.getElementById('ligneMesure').innerHTML;
+        ` + document.getElementById(`parametre_ligne_mesure_${numero_ligne}`).innerHTML;
     }
     else
     {
